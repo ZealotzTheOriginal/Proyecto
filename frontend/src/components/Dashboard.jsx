@@ -1,13 +1,12 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-    import { exportToPDF, exportToExcel } from "../utils/exportUtils";
+import { exportToPDF, exportToExcel } from "../utils/exportUtils";
+import { API_BASE_URL } from "../config/api";
 
 import {
   PieChart, Pie, Cell, Tooltip, Legend,
   BarChart, Bar, XAxis, YAxis, CartesianGrid,
 } from "recharts";
-
-const API = "http://localhost:5000/api";
 
 const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
 
@@ -17,9 +16,9 @@ export default function Dashboard() {
   const [transportes, setTransportes] = useState([]);
 
   useEffect(() => {
-    axios.get(`${API}/voluntarios`).then((res) => setVoluntarios(res.data));
-    axios.get(`${API}/donaciones`).then((res) => setDonaciones(res.data));
-    axios.get(`${API}/transportes`).then((res) => setTransportes(res.data));
+    axios.get(`${API_BASE_URL}/voluntarios`).then((res) => setVoluntarios(res.data));
+    axios.get(`${API_BASE_URL}/donaciones`).then((res) => setDonaciones(res.data));
+    axios.get(`${API_BASE_URL}/transportes`).then((res) => setTransportes(res.data));
   }, []);
 
   // Datos calculados

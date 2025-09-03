@@ -3,6 +3,7 @@ import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { API_BASE_URL } from "../config/api";
 
 // Icono personalizado para transportes
 const transporteIcon = new L.Icon({
@@ -10,7 +11,7 @@ const transporteIcon = new L.Icon({
   iconSize: [30, 30],
 });
 
-const API = "http://localhost:5000/api/transportes";
+const API = `${API_BASE_URL}/transportes`;
 
 export default function MapaTransportes() {
   const [transportes, setTransportes] = useState([]);

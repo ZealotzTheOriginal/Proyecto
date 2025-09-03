@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { API_BASE_URL } from "./config/api";
 
 export default function Voluntarios() {
   const [voluntarios, setVoluntarios] = useState([]);
   const [form, setForm] = useState({ nombre: "", email: "", telefono: "" });
 
-  const API = "http://localhost:5000/api/voluntarios";
+  const API = `${API_BASE_URL}/voluntarios`;
 
   useEffect(() => { fetchData(); }, []);
   const fetchData = async () => {
