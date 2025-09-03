@@ -6,7 +6,20 @@ import donacionRoutes from "./routes/donaciones.js";
 import transporteRoutes from "./routes/transportes.js";
 
 const app = express();
-app.use(cors({ origin: ["http://localhost:5173", "http://127.0.0.1:5173", "http://localhost:3000"], credentials: true }));
+
+// Configure CORS for production
+const allowedOrigins = [
+  "http://localhost:5173", 
+  "http://127.0.0.1:5173", 
+  "http://localhost:3000",
+  process.env.FRONTEND_URL,
+  process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : null
+].filter(Boolean);
+
+app.use(cors({ 
+  origin: allowedOrigins, 
+  credentials: true 
+}));
 app.use(express.json());
 
 app.get("/api/health", (req, res) => res.json({ ok: true, service: "nexa-backend" }));
@@ -17,8 +30,14 @@ app.use("/api/transportes", transporteRoutes);
 
 // 404
 app.use((req, res) => {
-res.status(404).json({ error: "Ruta no encontrada" });
+  res.status(404).json({ error: "Ruta no encontrada" });
 });
 
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`Servidor backend http://localhost:${PORT}`));
+// Export for Vercel
+export default app;
+
+// For local development
+if (process.env.NODE_ENV !== 'production') {
+  const PORT = process.env.PORT || 5000;
+  app.listen(PORT, () => console.log(`Servidor backend http://localhost:${PORT}`));
+}
