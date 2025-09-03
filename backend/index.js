@@ -1,6 +1,6 @@
 import express from "express";
 import cors from "cors";
-import "./db.js"; // asegura la inicialización de la DB
+import { getDb } from "./db.js"; // importar la función de inicialización
 import voluntarioRoutes from "./routes/voluntarios.js";
 import donacionRoutes from "./routes/donaciones.js";
 import transporteRoutes from "./routes/transportes.js";
@@ -22,7 +22,16 @@ app.use(cors({
 }));
 app.use(express.json());
 
-app.get("/api/health", (req, res) => res.json({ ok: true, service: "nexa-backend" }));
+app.get("/api/health", async (req, res) => {
+  try {
+    // Inicializar la base de datos para asegurar que funciona
+    await getDb();
+    res.json({ ok: true, service: "nexa-backend", database: "connected" });
+  } catch (error) {
+    console.error('Health check failed:', error);
+    res.status(500).json({ ok: false, service: "nexa-backend", error: error.message });
+  }
+});
 
 app.use("/api/voluntarios", voluntarioRoutes);
 app.use("/api/donaciones", donacionRoutes);
