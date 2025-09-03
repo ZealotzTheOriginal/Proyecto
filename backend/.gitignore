@@ -1,0 +1,41 @@
+# Dependencias
+/node_modules
+/.pnp
+.pnp.js
+
+# Archivos de compilación y producción
+/build
+/dist
+
+# Archivos de configuración de desarrollo
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Cache de paquetes
+/.npm
+/.yarn/cache
+/.yarn/unplugged
+/.yarn/build-state.yml
+/.yarn/install-state.gz
+
+# Editor/IDE
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# MacOS y Linux
+.DS_Store
+*.swp
